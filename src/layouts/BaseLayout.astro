@@ -1,6 +1,5 @@
 ---
 // Fonts are served from this site itself (no Google Fonts requests).
-import '@fontsource-variable/archivo/wdth.css';
 import '@fontsource/ibm-plex-sans/400.css';
 import '@fontsource/ibm-plex-sans/500.css';
 import '@fontsource/ibm-plex-sans/600.css';
@@ -12,37 +11,17 @@ import '@fontsource-variable/source-serif-4/index.css';
 import '@fontsource-variable/source-serif-4/wght-italic.css';
 import '../styles/global.css';
 
-import { getCollection } from 'astro:content';
-import { site, navItems } from '../site.config';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { site } from '../site.config';
 
 interface Props {
   title?: string;
   description?: string;
-  isHome?: boolean;
 }
 
-const { title, description = site.description, isHome = false } = Astro.props;
+const { title, description = site.description } = Astro.props;
 const pageTitle = title ? `${title} · ${site.name}` : site.name;
-
-// While you work locally every tab shows. On the live site a writing tab
-// appears only once its section has a published entry.
-const visibleNavItems = [];
-for (const item of navItems) {
-  if (!item.collection || import.meta.env.DEV) {
-    visibleNavItems.push(item);
-    continue;
-  }
-  const publishedEntries = await getCollection(item.collection, ({ data }) => !data.draft);
-  if (publishedEntries.length > 0) visibleNavItems.push(item);
-}
-
-// On the home page the big introduction replaces the name, so the bar only shows when there are tabs to switch between.
-const isTopBarShown = !isHome || visibleNavItems.length > 1;
-
-const currentPath = Astro.url.pathname;
-function isCurrentTab(href: string) {
-  return href === '/' ? currentPath === '/' : currentPath.startsWith(href);
-}
 ---
 
 <!doctype html>
@@ -57,35 +36,11 @@ function isCurrentTab(href: string) {
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
   <body>
-    <div class="page">
-      {isTopBarShown && (
-        <header class:list={['top-bar', { 'is-home': isHome }]}>
-          {!isHome && <a class="wordmark" href="/">{site.name}</a>}
-          {visibleNavItems.length > 1 && (
-            <nav class="tabs" aria-label="Sections">
-              {visibleNavItems.map((item) => (
-                <a
-                  class:list={['tab', { 'is-active': isCurrentTab(item.href) }]}
-                  href={item.href}
-                  aria-current={isCurrentTab(item.href) ? 'page' : undefined}
-                >
-                  {item.label}
-                </a>
-              ))}
-            </nav>
-          )}
-        </header>
-      )}
-
+    <a class="skip-link" href="#content">Skip to content</a>
+    <SiteHeader />
+    <main id="content">
       <slot />
-
-      <footer class="site-foot">
-        <span>{site.name} · Köln</span>
-        <nav aria-label="Legal">
-          <a href="/impressum/">Impressum</a>
-          <a href="/privacy/">Privacy</a>
-        </nav>
-      </footer>
-    </div>
+    </main>
+    <SiteFooter />
   </body>
 </html>

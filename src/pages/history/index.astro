@@ -10,10 +10,12 @@ const entries = (await getCollection('history', ({ data }) => import.meta.env.DE
 ---
 
 <BaseLayout title="History & Money" description="Observations and inferences on history and on how money shaped it.">
-  <section class="section-intro">
-    <p class="eyebrow mono">History &amp; Money</p>
-    <h1 class="section-title">Observations on history</h1>
-    <p class="lede">Notes and inferences on history, and on how money and economic systems shaped it.</p>
-  </section>
-  <PostList entries={entries} basePath="/history/" emptyText="The first entries are on their way." />
+  <div class="container page-content">
+    <section class="section-intro">
+      <p class="section-eyebrow">History &amp; Money</p>
+      <h1 class="section-title">Observations on history</h1>
+      <p class="lede">Notes and inferences on history, and on how money and economic systems shaped it.</p>
+    </section>
+    <PostList entries={entries} basePath="/history/" emptyText="The first entries are on their way." />
+  </div>
 </BaseLayout>

@@ -1,14 +1,16 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import HomeHero from '../components/HomeHero.astro';
+import AboutMe from '../components/AboutMe.astro';
 import CareerMap from '../components/CareerMap.astro';
 import LevelCard from '../components/LevelCard.astro';
-import { site, chapters, profileLinks } from '../site.config';
+import { chapters } from '../site.config';
 
 // Newest level first.
 const careerEntries = (await getCollection('career')).sort((a, b) => b.data.level - a.data.level);
 
-// Older levels get cool colors, recent ones warm colors (--d0 … --d8 in global.css).
+// Older levels get cool colors, recent ones warm colors (--d0 … --d8 in tokens.css).
 const highestLevel = Math.max(...careerEntries.map((entry) => entry.data.level));
 function getDepthColor(level: number) {
   const depthIndex = Math.round(((level - 1) / Math.max(1, highestLevel - 1)) * 8);
@@ -18,36 +20,37 @@ function getDepthColor(level: number) {
 const levels = careerEntries.map((entry) => ({ entry, color: getDepthColor(entry.data.level) }));
 ---
 
-<BaseLayout isHome>
-  <section class="hero">
-    <p class="eyebrow mono">{site.eyebrow}</p>
-    <h1>{site.name}</h1>
-    <p class="lede">{site.tagline}</p>
-    <p class="now"><span class="now-pill">Now</span><span>{site.now}</span></p>
-    {profileLinks.length > 0 && (
-      <ul class="profile-links">
-        {profileLinks.map((link) => (
-          <li><a href={link.url} target="_blank" rel="noopener">{link.label}</a></li>
-        ))}
-      </ul>
-    )}
+<BaseLayout>
+  <HomeHero />
+  <AboutMe />
+
+  <section class="section" id="work" aria-labelledby="work-title">
+    <div class="container is-wide">
+      <header class="work-head">
+        <p class="section-eyebrow">Portfolio</p>
+        <h2 id="work-title">Career map</h2>
+        <p class="lede">
+          {levels.length} levels in {chapters.length} chapters, newest first. Pick a level on the map or keep scrolling.
+        </p>
+      </header>
+
+      <div class="world">
+        <CareerMap levels={levels} chapters={chapters} />
+
+        <div class="levels">
+          {chapters.map((chapter) => (
+            <section class="chapter" aria-labelledby={`chapter-${chapter.number}`}>
+              <header class="chapter-head">
+                <p class="mono">Chapter {chapter.number} · {chapter.meta}</p>
+                <h3 id={`chapter-${chapter.number}`}>{chapter.title}</h3>
+              </header>
+              {levels
+                .filter(({ entry }) => entry.data.chapter === chapter.number)
+                .map(({ entry, color }) => <LevelCard entry={entry} color={color} />)}
+            </section>
+          ))}
+        </div>
+      </div>
+    </div>
   </section>
-
-  <div class="world">
-    <CareerMap levels={levels} chapters={chapters} />
-
-    <main class="levels" id="career">
-      {chapters.map((chapter) => (
-        <section class="chapter" aria-labelledby={`chapter-${chapter.number}`}>
-          <header class="chapter-head">
-            <p class="mono">Chapter {chapter.number} · {chapter.meta}</p>
-            <h2 id={`chapter-${chapter.number}`}>{chapter.title}</h2>
-          </header>
-          {levels
-            .filter(({ entry }) => entry.data.chapter === chapter.number)
-            .map(({ entry, color }) => <LevelCard entry={entry} color={color} />)}
-        </section>
-      ))}
-    </main>
-  </div>
 </BaseLayout>

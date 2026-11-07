@@ -13,10 +13,10 @@ const level = entry.data;
 const hasChips = level.stats.length > 0 || level.tags.length > 0;
 ---
 
-<article class="level" id={entry.id} style={`--c: ${color}`}>
+<article class="level reveal" id={entry.id} style={`--c: ${color}`}>
   <div class="level-tag">
     <span class="lv">Level {level.level}</span>
-    <h3>{level.title}</h3>
+    <h4>{level.title}</h4>
     <p class="tag-sub">{level.subtitle}</p>
     {level.years && <p class="tag-years">{level.years}</p>}
   </div>

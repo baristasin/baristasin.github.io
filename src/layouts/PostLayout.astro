@@ -15,23 +15,25 @@ const source = [post.author, post.work].filter(Boolean).join(', ');
 ---
 
 <BaseLayout title={post.title} description={post.summary}>
-  <article class="article">
-    <header class="article-head">
-      <a class="back mono" href={sectionHref}>← {sectionLabel}</a>
-      <h1>{post.title}</h1>
-      {source && <p class="source">{source}</p>}
-      <p class="post-meta mono">
-        <time datetime={post.date.toISOString()}>{dateFormat.format(post.date)}</time>
-        {post.draft && <span class="draft-badge">Draft · not published</span>}
-      </p>
-      {post.tags.length > 0 && (
-        <ul class="tag-list">
-          {post.tags.map((tag) => <li class="chip">{tag}</li>)}
-        </ul>
-      )}
-    </header>
-    <div class="prose">
-      <slot />
-    </div>
-  </article>
+  <div class="container page-content">
+    <article class="article">
+      <header class="article-head">
+        <a class="back mono" href={sectionHref}>← {sectionLabel}</a>
+        <h1>{post.title}</h1>
+        {source && <p class="source">{source}</p>}
+        <p class="post-meta mono">
+          <time datetime={post.date.toISOString()}>{dateFormat.format(post.date)}</time>
+          {post.draft && <span class="draft-badge">Draft · not published</span>}
+        </p>
+        {post.tags.length > 0 && (
+          <ul class="tag-list">
+            {post.tags.map((tag) => <li class="chip">{tag}</li>)}
+          </ul>
+        )}
+      </header>
+      <div class="prose">
+        <slot />
+      </div>
+    </article>
+  </div>
 </BaseLayout>

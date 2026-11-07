@@ -1,0 +1,77 @@
+---
+// Dark footer, adapted from the Astro Chalet theme (MIT, see LICENSES/astro-chalet.txt).
+import { site, profileLinks } from '../site.config';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>
+      <p class="footer-name">{site.name}</p>
+      <p class="footer-text">{site.eyebrow}</p>
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      {profileLinks.map((link) => (
+        <a href={link.url} target="_blank" rel="noopener">{link.label}</a>
+      ))}
+      <a href="/impressum/">Impressum</a>
+      <a href="/privacy/">Privacy</a>
+    </nav>
+  </div>
+  <div class="container">
+    <p class="footer-copyright">© {year} {site.name}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-dark-bg);
+    color: var(--color-dark-text);
+    padding-block: var(--space-4) var(--space-3);
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+
+  .footer-name {
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    font-weight: 650;
+    margin-bottom: var(--space-1);
+  }
+
+  .footer-text {
+    color: var(--color-dark-text-muted);
+    font-size: var(--text-sm);
+    margin: 0;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-3);
+  }
+
+  .footer-links a {
+    color: var(--color-dark-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .footer-links a:hover {
+    color: var(--color-accent-bright);
+  }
+
+  .footer-copyright {
+    font-size: var(--text-sm);
+    color: var(--color-dark-text-muted);
+    opacity: 0.7;
+    margin: 0;
+  }
+</style>

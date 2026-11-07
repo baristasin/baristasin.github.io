@@ -10,10 +10,12 @@ const entries = (await getCollection('reading', ({ data }) => import.meta.env.DE
 ---
 
 <BaseLayout title="Reading Journal" description="Close readings and summaries of what Barış Taşın reads.">
-  <section class="section-intro">
-    <p class="eyebrow mono">Reading Journal</p>
-    <h1 class="section-title">Notes on what I read</h1>
-    <p class="lede">Close readings and summaries, kept as a journal. Walter Benjamin and Theodor W. Adorno come first.</p>
-  </section>
-  <PostList entries={entries} basePath="/reading/" emptyText="The first entries are on their way." />
+  <div class="container page-content">
+    <section class="section-intro">
+      <p class="section-eyebrow">Reading Journal</p>
+      <h1 class="section-title">Notes on what I read</h1>
+      <p class="lede">Close readings and summaries, kept as a journal. Walter Benjamin and Theodor W. Adorno come first.</p>
+    </section>
+    <PostList entries={entries} basePath="/reading/" emptyText="The first entries are on their way." />
+  </div>
 </BaseLayout>

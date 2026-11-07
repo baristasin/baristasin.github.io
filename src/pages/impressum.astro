@@ -6,23 +6,25 @@ import { legal } from '../site.config';
 ---
 
 <BaseLayout title="Impressum" description="Legal notice">
-  <section class="legal">
-    <h1>Impressum</h1>
-    <p class="mono">Angaben gemäß § 5 DDG · Legal notice</p>
+  <div class="container page-content">
+    <section class="legal">
+      <h1>Impressum</h1>
+      <p class="mono">Angaben gemäß § 5 DDG · Legal notice</p>
 
-    <h2>Verantwortlich · Responsible</h2>
-    <p>
-      {legal.fullName}
-      {legal.addressLines.map((line) => (
-        <>
-          <br />
-          {line}
-        </>
-      ))}
-    </p>
+      <h2>Verantwortlich · Responsible</h2>
+      <p>
+        {legal.fullName}
+        {legal.addressLines.map((line) => (
+          <>
+            <br />
+            {line}
+          </>
+        ))}
+      </p>
 
-    <h2>Kontakt · Contact</h2>
-    {legal.email && <p>E-Mail: {legal.email}</p>}
-    {legal.phone && <p>Telefon: {legal.phone}</p>}
-  </section>
+      <h2>Kontakt · Contact</h2>
+      {legal.email && <p>E-Mail: {legal.email}</p>}
+      {legal.phone && <p>Telefon: {legal.phone}</p>}
+    </section>
+  </div>
 </BaseLayout>
