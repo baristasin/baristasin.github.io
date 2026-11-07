@@ -1,0 +1,114 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  levels: { entry: CollectionEntry<'career'>; color: string }[];
+  chapters: { number: number; mapLabel: string }[];
+}
+
+const { levels, chapters } = Astro.props;
+---
+
+<aside class="minimap" aria-label="Career map">
+  <div class="map-head">
+    <p class="map-title">World map</p>
+    <p class="map-count mono">{levels.length} levels · {chapters.length} chapters</p>
+  </div>
+
+  <ol class="path">
+    <li class="path-label is-now">Now</li>
+    {chapters.map((chapter) => (
+      <>
+        <li class="chapter-mark">Ch. {chapter.number} · {chapter.mapLabel}</li>
+        {levels
+          .filter(({ entry }) => entry.data.chapter === chapter.number)
+          .map(({ entry, color }) => (
+            <li>
+              <a class="node" href={`#${entry.id}`} data-target={entry.id} style={`--c: ${color}`}>
+                <span class="joint"></span>
+                <span class="node-name">{entry.data.mapName ?? entry.data.title}</span>
+                <span class="node-year">{entry.data.years ?? ''}</span>
+              </a>
+            </li>
+          ))}
+      </>
+    ))}
+    <li class="path-label">Start</li>
+  </ol>
+
+  <div class="legend">
+    <div class="legend-bar"></div>
+    <div class="legend-scale"><span>Earlier</span><span>Recent</span></div>
+    <p class="legend-note">Colors work like a depth camera. Warm levels are recent, cool ones came earlier.</p>
+  </div>
+</aside>
+
+<script>
+  // Highlights the level you are reading, in the map and on the page.
+  const nodes = Array.from(document.querySelectorAll<HTMLAnchorElement>('.node'));
+  const levels = Array.from(document.querySelectorAll<HTMLElement>('.level'));
+  const strip = document.querySelector<HTMLElement>('.path');
+  const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let activeId = '';
+
+  function setActive(id: string) {
+    if (id === activeId) return;
+    activeId = id;
+
+    for (const node of nodes) {
+      const isMatch = node.dataset.target === id;
+      node.classList.toggle('is-active', isMatch);
+      if (isMatch) {
+        node.setAttribute('aria-current', 'location');
+        scrollStripTo(node);
+      } else {
+        node.removeAttribute('aria-current');
+      }
+    }
+    for (const level of levels) {
+      level.classList.toggle('is-active', level.id === id);
+    }
+  }
+
+  // On phones the map is a horizontal strip; keep the active level in view.
+  function scrollStripTo(node: HTMLElement) {
+    if (!strip) return;
+    const isStripScrollable = strip.scrollWidth > strip.clientWidth + 4;
+    if (!isStripScrollable) return;
+    const left = node.offsetLeft - (strip.clientWidth - node.offsetWidth) / 2;
+    strip.scrollTo({ left: Math.max(0, left), behavior: isReducedMotion ? 'auto' : 'smooth' });
+  }
+
+  // The active level is the last one whose top has passed a reading line near the middle of the screen.
+  function updateFromScroll() {
+    if (levels.length === 0) return;
+    const readingLine = window.innerHeight * 0.45;
+    const isAtBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+    let activeLevel = levels[0];
+    if (isAtBottom) {
+      activeLevel = levels[levels.length - 1];
+    } else {
+      for (const level of levels) {
+        if (level.getBoundingClientRect().top <= readingLine) activeLevel = level;
+        else break;
+      }
+    }
+    setActive(activeLevel.id);
+  }
+
+  let isUpdateQueued = false;
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (isUpdateQueued) return;
+      isUpdateQueued = true;
+      window.requestAnimationFrame(() => {
+        isUpdateQueued = false;
+        updateFromScroll();
+      });
+    },
+    { passive: true },
+  );
+  window.addEventListener('resize', updateFromScroll);
+  updateFromScroll();
+</script>

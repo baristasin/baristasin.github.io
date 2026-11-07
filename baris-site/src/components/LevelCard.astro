@@ -1,0 +1,42 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import MediaBlock from './MediaBlock.astro';
+
+interface Props {
+  entry: CollectionEntry<'career'>;
+  color: string;
+}
+
+const { entry, color } = Astro.props;
+const { Content } = await render(entry);
+const level = entry.data;
+const hasChips = level.stats.length > 0 || level.tags.length > 0;
+---
+
+<article class="level" id={entry.id} style={`--c: ${color}`}>
+  <div class="level-tag">
+    <span class="lv">Level {level.level}</span>
+    <h3>{level.title}</h3>
+    <p class="tag-sub">{level.subtitle}</p>
+    {level.years && <p class="tag-years">{level.years}</p>}
+  </div>
+
+  <div class="arrow" aria-hidden="true">
+    <svg viewBox="0 0 40 16">
+      <path d="M1 8H36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+      <path d="M30 2l7 6-7 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  </div>
+
+  <div class="level-body">
+    <p class="role mono">{level.role}</p>
+    <div class="desc"><Content /></div>
+    {hasChips && (
+      <ul class="chips">
+        {level.stats.map((stat) => <li class="chip stat">{stat}</li>)}
+        {level.tags.map((tag) => <li class="chip">{tag}</li>)}
+      </ul>
+    )}
+    <MediaBlock media={level.media} />
+  </div>
+</article>

@@ -1,0 +1,53 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CareerMap from '../components/CareerMap.astro';
+import LevelCard from '../components/LevelCard.astro';
+import { site, chapters, profileLinks } from '../site.config';
+
+// Newest level first.
+const careerEntries = (await getCollection('career')).sort((a, b) => b.data.level - a.data.level);
+
+// Older levels get cool colors, recent ones warm colors (--d0 … --d8 in global.css).
+const highestLevel = Math.max(...careerEntries.map((entry) => entry.data.level));
+function getDepthColor(level: number) {
+  const depthIndex = Math.round(((level - 1) / Math.max(1, highestLevel - 1)) * 8);
+  return `var(--d${depthIndex})`;
+}
+
+const levels = careerEntries.map((entry) => ({ entry, color: getDepthColor(entry.data.level) }));
+---
+
+<BaseLayout isHome>
+  <section class="hero">
+    <p class="eyebrow mono">{site.eyebrow}</p>
+    <h1>{site.name}</h1>
+    <p class="lede">{site.tagline}</p>
+    <p class="now"><span class="now-pill">Now</span><span>{site.now}</span></p>
+    {profileLinks.length > 0 && (
+      <ul class="profile-links">
+        {profileLinks.map((link) => (
+          <li><a href={link.url} target="_blank" rel="noopener">{link.label}</a></li>
+        ))}
+      </ul>
+    )}
+  </section>
+
+  <div class="world">
+    <CareerMap levels={levels} chapters={chapters} />
+
+    <main class="levels" id="career">
+      {chapters.map((chapter) => (
+        <section class="chapter" aria-labelledby={`chapter-${chapter.number}`}>
+          <header class="chapter-head">
+            <p class="mono">Chapter {chapter.number} · {chapter.meta}</p>
+            <h2 id={`chapter-${chapter.number}`}>{chapter.title}</h2>
+          </header>
+          {levels
+            .filter(({ entry }) => entry.data.chapter === chapter.number)
+            .map(({ entry, color }) => <LevelCard entry={entry} color={color} />)}
+        </section>
+      ))}
+    </main>
+  </div>
+</BaseLayout>

@@ -1,0 +1,89 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  media: CollectionEntry<'career'>['data']['media'];
+}
+
+const { media } = Astro.props;
+const isDev = import.meta.env.DEV;
+---
+
+{media.length > 0 && (
+  <div class="media-grid">
+    {media.map((item) => {
+      if (item.type === 'image') {
+        return (
+          <figure class="media-item">
+            <Image src={item.src} alt={item.alt} widths={[480, 960, 1440]} sizes="(max-width: 760px) 100vw, 760px" />
+            {item.caption && <figcaption>{item.caption}</figcaption>}
+          </figure>
+        );
+      }
+      if (item.type === 'video') {
+        return (
+          <figure class="media-item">
+            <video src={item.src} controls preload="metadata" playsinline></video>
+            <figcaption>{item.title}</figcaption>
+          </figure>
+        );
+      }
+      if (item.type === 'youtube') {
+        return (
+          <div
+            class="media-item click-to-load"
+            style="aspect-ratio: 16 / 9"
+            data-embed-src={`https://www.youtube-nocookie.com/embed/${item.id}?autoplay=1`}
+            data-embed-title={item.title}
+          >
+            <button type="button" class="load-button">
+              <span class="load-title">▶ {item.title}</span>
+              <span class="load-note">Plays from YouTube after you click</span>
+            </button>
+          </div>
+        );
+      }
+      if (item.type === 'itch') {
+        return (
+          <div
+            class="media-item click-to-load"
+            style={`height: ${item.height}px`}
+            data-embed-src={item.embedUrl}
+            data-embed-title={item.title}
+          >
+            <button type="button" class="load-button">
+              <span class="load-title">▶ {item.title}</span>
+              <span class="load-note">Loads from itch.io after you click</span>
+            </button>
+          </div>
+        );
+      }
+      return (
+        <a class="media-item link-card" href={item.url} target="_blank" rel="noopener">
+          {item.label} <span aria-hidden="true">↗</span>
+        </a>
+      );
+    })}
+  </div>
+)}
+
+{media.length === 0 && isDev && (
+  <p class="media-hint mono">No media yet · add photos, videos or links in this level's file</p>
+)}
+
+<script>
+  // Embedded videos and games load only after a click,
+  // so nothing is sent to YouTube or itch.io before the visitor asks for it.
+  for (const box of document.querySelectorAll<HTMLElement>('.click-to-load')) {
+    const button = box.querySelector('button');
+    button?.addEventListener('click', () => {
+      const frame = document.createElement('iframe');
+      frame.src = box.dataset.embedSrc ?? '';
+      frame.title = box.dataset.embedTitle ?? '';
+      frame.allow = 'autoplay; fullscreen';
+      frame.allowFullscreen = true;
+      box.replaceChildren(frame);
+    });
+  }
+</script>

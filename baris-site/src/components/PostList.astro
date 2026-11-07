@@ -1,0 +1,30 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entries: CollectionEntry<'reading' | 'history'>[];
+  basePath: string;
+  emptyText: string;
+}
+
+const { entries, basePath, emptyText } = Astro.props;
+const dateFormat = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+{entries.length === 0 ? (
+  <p class="empty-state">{emptyText}</p>
+) : (
+  <ul class="post-list">
+    {entries.map((entry) => (
+      <li class="post-item">
+        <p class="post-meta mono">
+          <time datetime={entry.data.date.toISOString()}>{dateFormat.format(entry.data.date)}</time>
+          {entry.data.author && <span>{entry.data.author}</span>}
+          {entry.data.draft && <span class="draft-badge">Draft · not published</span>}
+        </p>
+        <h2><a href={`${basePath}${entry.id}/`}>{entry.data.title}</a></h2>
+        <p class="post-summary">{entry.data.summary}</p>
+      </li>
+    ))}
+  </ul>
+)}

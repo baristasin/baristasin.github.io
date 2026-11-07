@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+
+// Drafts show while you work locally and stay off the live site.
+const entries = (await getCollection('reading', ({ data }) => import.meta.env.DEV || !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<BaseLayout title="Reading Journal" description="Close readings and summaries of what Barış Taşın reads.">
+  <section class="section-intro">
+    <p class="eyebrow mono">Reading Journal</p>
+    <h1 class="section-title">Notes on what I read</h1>
+    <p class="lede">Close readings and summaries, kept as a journal. Walter Benjamin and Theodor W. Adorno come first.</p>
+  </section>
+  <PostList entries={entries} basePath="/reading/" emptyText="The first entries are on their way." />
+</BaseLayout>

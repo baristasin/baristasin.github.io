@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+
+// Drafts show while you work locally and stay off the live site.
+const entries = (await getCollection('history', ({ data }) => import.meta.env.DEV || !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<BaseLayout title="History & Money" description="Observations and inferences on history and on how money shaped it.">
+  <section class="section-intro">
+    <p class="eyebrow mono">History &amp; Money</p>
+    <h1 class="section-title">Observations on history</h1>
+    <p class="lede">Notes and inferences on history, and on how money and economic systems shaped it.</p>
+  </section>
+  <PostList entries={entries} basePath="/history/" emptyText="The first entries are on their way." />
+</BaseLayout>

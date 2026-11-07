@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { legal } from '../site.config';
+
+// The details come from `legal` in src/site.config.ts.
+---
+
+<BaseLayout title="Impressum" description="Legal notice">
+  <section class="legal">
+    <h1>Impressum</h1>
+    <p class="mono">Angaben gemäß § 5 DDG · Legal notice</p>
+
+    <h2>Verantwortlich · Responsible</h2>
+    <p>
+      {legal.fullName}
+      {legal.addressLines.map((line) => (
+        <>
+          <br />
+          {line}
+        </>
+      ))}
+    </p>
+
+    <h2>Kontakt · Contact</h2>
+    {legal.email && <p>E-Mail: {legal.email}</p>}
+    {legal.phone && <p>Telefon: {legal.phone}</p>}
+  </section>
+</BaseLayout>
