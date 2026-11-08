@@ -29,7 +29,7 @@ While `npm run dev` runs, every saved change shows up in the browser right away.
 
 Each content folder has a `_template.md` that lists every field with a short note. Copy it, rename it, fill it in. Files starting with `_` are ignored.
 
-In a career level, `summary` shows on the level's card. Its `media` and the text under the frontmatter show in the Details panel, which opens when a visitor clicks the level.
+In a career level, `summary` shows on the level's card. The Details panel, which opens when a visitor clicks the level, shows `credits` as small "My role" labels, then the text under the frontmatter, then the `media`.
 
 To change a photo, replace the file and keep its name. Astro makes the smaller versions for phones by itself. Photos around 3000 px on the long side are enough. This repository is public, so remove location data (EXIF/GPS) from a photo before you commit it.
 

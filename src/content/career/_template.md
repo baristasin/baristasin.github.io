@@ -10,6 +10,9 @@ years: "2027"                  # optional
 chapter: 3                     # which chapter in src/site.config.ts
 role: Your role
 summary: "One or two sentences shown on the level's card."
+credits:                       # optional: what you did, shown as small labels at the top of Details
+  - Solo programmer
+  - Design contributor
 stats:                         # optional: numbers that stand out
   - 1M+ players
 tags:                          # optional
@@ -34,5 +37,5 @@ media:                         # optional: shown in the Details panel, in this o
     label: Project page
 ---
 
-The longer description goes here and shows in the Details panel, under the media.
+The longer description goes here and shows in the Details panel, above the media.
 Plain Markdown: paragraphs, **bold**, [links](https://example.com). Leave it empty if the summary says enough.

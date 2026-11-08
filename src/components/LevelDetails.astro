@@ -28,8 +28,16 @@ const detailBlocks = await Promise.all(
           <p class="details-meta">{[level.subtitle, level.years].filter(Boolean).join(' · ')}</p>
           <p class="role mono">{level.role}</p>
         </header>
-        <MediaBlock media={level.media} />
+        {level.credits.length > 0 && (
+          <div class="credits">
+            <span class="credits-label mono">My role</span>
+            <ul>
+              {level.credits.map((credit) => <li>{credit}</li>)}
+            </ul>
+          </div>
+        )}
         <div class="details-text"><Content /></div>
+        <MediaBlock media={level.media} />
         {!hasDetails && <p class="details-empty">Photos, videos and a longer write-up are coming soon.</p>}
       </article>
     );

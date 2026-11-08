@@ -755,8 +755,47 @@ a:hover {
   margin-top: 4px;
 }
 
+/* "My role" labels at the top of Details */
+.credits {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+}
+
+.credits-label {
+  color: var(--color-text-muted);
+}
+
+.credits ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.credits li {
+  padding: 3px 12px;
+  border: 1px solid color-mix(in srgb, var(--c) 55%, var(--color-surface));
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--c) 12%, var(--color-surface));
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
 .details-text:empty {
   display: none;
+}
+
+.details-text p {
+  max-width: none;
+}
+
+.details-text h4 {
+  margin: 1.4em 0 0.4em;
+  font-size: 1.1rem;
 }
 
 .details-text > :first-child {

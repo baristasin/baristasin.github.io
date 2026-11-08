@@ -19,6 +19,7 @@ const career = defineCollection({
       chapter: z.number(),
       role: z.string(),
       summary: z.string(),
+      credits: z.array(z.string()).default([]),
       stats: z.array(z.string()).default([]),
       tags: z.array(z.string()).default([]),
       media: z
