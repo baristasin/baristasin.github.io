@@ -4,7 +4,8 @@
 export const site = {
   name: 'Barış Taşın',
   eyebrow: 'Game developer · Researcher · Köln',
-  tagline: 'From mobile games with millions of players to markerless motion capture research at Cologne Game Lab.',
+  tagline:
+    'A research-oriented engineer at Cologne Game Lab who loves making games as much as playing them and is always open to new challenges.',
   now: 'MA Game Development and Research, Cologne Game Lab (TH Köln) · Research assistant on HistoVeaR',
   description: 'Portfolio of Barış Taşın, game developer and researcher in Köln.',
 };
