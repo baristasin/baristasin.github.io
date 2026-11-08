@@ -29,6 +29,8 @@ While `npm run dev` runs, every saved change shows up in the browser right away.
 
 Each content folder has a `_template.md` that lists every field with a short note. Copy it, rename it, fill it in. Files starting with `_` are ignored.
 
+In a career level, `summary` shows on the level's card. Its `media` and the text under the frontmatter show in the Details panel, which opens when a visitor clicks the level.
+
 To change a photo, replace the file and keep its name. Astro makes the smaller versions for phones by itself. Photos around 3000 px on the long side are enough. This repository is public, so remove location data (EXIF/GPS) from a photo before you commit it.
 
 Playable builds (Unity WebGL, Godot web exports) are best uploaded to itch.io and embedded with the `itch` media type. A video or game embed loads only after the visitor clicks, so nothing reaches YouTube or itch.io before that.

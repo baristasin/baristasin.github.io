@@ -9,11 +9,12 @@ subtitle: One line under the title
 years: "2027"                  # optional
 chapter: 3                     # which chapter in src/site.config.ts
 role: Your role
+summary: "One or two sentences shown on the level's card."
 stats:                         # optional: numbers that stand out
   - 1M+ players
 tags:                          # optional
   - Unity
-media:                         # optional: any mix, in this order on the page
+media:                         # optional: shown in the Details panel, in this order
   - type: image                # put images next to this file, e.g. in images/
     src: ./images/project-1.jpg
     alt: What the picture shows
@@ -33,4 +34,5 @@ media:                         # optional: any mix, in this order on the page
     label: Project page
 ---
 
-Write the description here. Plain Markdown: paragraphs, **bold**, [links](https://example.com).
+The longer description goes here and shows in the Details panel, under the media.
+Plain Markdown: paragraphs, **bold**, [links](https://example.com). Leave it empty if the summary says enough.

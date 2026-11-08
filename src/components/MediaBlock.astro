@@ -7,7 +7,6 @@ interface Props {
 }
 
 const { media } = Astro.props;
-const isDev = import.meta.env.DEV;
 ---
 
 {media.length > 0 && (
@@ -66,10 +65,6 @@ const isDev = import.meta.env.DEV;
       );
     })}
   </div>
-)}
-
-{media.length === 0 && isDev && (
-  <p class="media-hint mono">No media yet · add photos, videos or links in this level's file</p>
 )}
 
 <script>

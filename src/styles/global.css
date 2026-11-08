@@ -40,6 +40,11 @@ video {
   display: block;
 }
 
+/* Elements switched off with the hidden attribute stay off, whatever their display style */
+[hidden] {
+  display: none !important;
+}
+
 h1,
 h2,
 h3,
@@ -226,10 +231,11 @@ a:hover {
   margin: 0;
 }
 
+/* Wide screens: map | levels | Details panel */
 .world {
   display: grid;
-  grid-template-columns: 264px minmax(0, 1fr);
-  gap: 44px;
+  grid-template-columns: 220px minmax(0, 1fr) minmax(360px, 0.9fr);
+  gap: 28px;
   align-items: start;
 }
 
@@ -362,7 +368,7 @@ a:hover {
     box-shadow var(--transition);
 }
 
-.node.is-active .joint::before {
+.node.is-selected .joint::before {
   transform: scale(1.3);
   box-shadow:
     0 0 0 3px var(--color-surface),
@@ -374,7 +380,7 @@ a:hover {
   line-height: 1.25;
 }
 
-.node.is-active .node-name {
+.node.is-selected .node-name {
   font-weight: 600;
 }
 
@@ -414,11 +420,12 @@ a:hover {
   color: var(--color-text-muted);
 }
 
-/* Levels */
+/* Levels. The column is a size container, so each card can stack when the column is narrow. */
 .levels {
   display: grid;
   gap: 64px;
   min-width: 0;
+  container-type: inline-size;
 }
 
 .chapter {
@@ -445,9 +452,10 @@ a:hover {
 
 .level {
   display: grid;
-  grid-template-columns: minmax(150px, 188px) 48px minmax(0, 1fr);
+  grid-template-columns: minmax(140px, 172px) 40px minmax(0, 1fr);
   align-items: start;
   scroll-margin-top: calc(var(--header-height) + 24px);
+  cursor: pointer;
 }
 
 .level-tag {
@@ -476,8 +484,19 @@ a:hover {
   background: var(--c);
 }
 
-.level.is-active .level-tag {
+@media (hover: hover) {
+  .level:hover .level-tag,
+  .level:hover .level-body {
+    border-color: var(--color-line);
+  }
+}
+
+.level.is-selected .level-tag {
   box-shadow: 5px 5px 0 var(--c);
+}
+
+.level.is-selected .level-body {
+  border-color: var(--c);
 }
 
 .lv {
@@ -548,16 +567,35 @@ a:hover {
   color: var(--color-text-muted);
 }
 
-.desc {
+.summary {
+  margin: 0;
   max-width: 64ch;
 }
 
-.desc > :first-child {
-  margin-top: 0;
+.details-button,
+.details-close {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 0;
+  background: none;
+  border: none;
+  color: var(--color-accent);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
 }
 
-.desc > :last-child {
-  margin-bottom: 0;
+.details-button:hover,
+.details-close:hover {
+  color: var(--color-accent-hover);
+}
+
+.details-arrow {
+  display: inline-block;
+  transition: transform var(--transition);
 }
 
 .chips,
@@ -674,13 +712,73 @@ a:hover {
   color: var(--color-on-accent);
 }
 
-.media-hint {
+/* --- Details panel: the chosen level's media and longer text ------------------------ */
+.details-column {
+  position: sticky;
+  top: calc(var(--header-height) + 20px);
+}
+
+.details-panel {
+  display: grid;
+  gap: 16px;
+  max-height: calc(100vh - var(--header-height) - 40px);
+  overflow-y: auto;
+  padding: 22px 26px 26px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-top: 4px solid var(--c);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.level-details {
+  display: grid;
+  gap: 16px;
+}
+
+.details-head {
+  display: grid;
+  gap: 4px;
+}
+
+.details-head h3 {
   margin: 0;
-  padding: 18px;
-  text-align: center;
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+}
+
+.details-meta {
+  margin: 0;
   color: var(--color-text-muted);
+}
+
+.details-head .role {
+  margin-top: 4px;
+}
+
+.details-text:empty {
+  display: none;
+}
+
+.details-text > :first-child {
+  margin-top: 0;
+}
+
+.details-text > :last-child {
+  margin-bottom: 0;
+}
+
+.details-empty {
+  margin: 0;
+  padding: 14px 16px;
   border: 1.5px dashed var(--color-border);
   border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+/* Only needed when the panel opens under a card on smaller screens */
+.details-close {
+  display: none;
 }
 
 /* --- Writing sections ------------------------------------------------------------ */
@@ -872,11 +970,78 @@ a:hover {
   margin: 0;
 }
 
-/* --- Tablet and phone: the minimap turns into a sticky level strip ----------------- */
-@media (max-width: 1099px) {
+/* --- Narrow level column: each card stacks, name box on top ------------------------ */
+@container (max-width: 559px) {
+  .level {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .level-tag {
+    min-height: 0;
+    padding: 16px 16px 14px;
+    justify-items: start;
+    text-align: left;
+  }
+
+  /* The years move up next to the level number, saving a line */
+  .tag-years {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    margin: 0;
+  }
+
+  .arrow {
+    height: 26px;
+    justify-items: start;
+    padding-left: 24px;
+  }
+
+  .arrow svg {
+    width: 32px;
+    height: 14px;
+    transform: rotate(90deg);
+  }
+
+  .level-body {
+    padding: 16px 18px 18px;
+  }
+}
+
+/* --- Tablet and phone: the map turns into a sticky strip, Details opens under the card --- */
+@media (max-width: 1199px) {
   .world {
     grid-template-columns: minmax(0, 1fr);
     gap: 28px;
+  }
+
+  .details-column {
+    display: none;
+  }
+
+  .levels .details-panel {
+    max-height: none;
+    overflow: visible;
+    margin-top: -12px;
+    padding: 18px;
+    /* When it opens, the end of its card stays visible above it (under the header and the map strip) */
+    scroll-margin-top: calc(var(--header-height) + 130px);
+  }
+
+  .levels .details-head {
+    display: none;
+  }
+
+  .levels .details-close {
+    display: inline-flex;
+  }
+
+  .details-arrow {
+    transform: rotate(90deg);
+  }
+
+  .level.is-selected .details-arrow {
+    transform: rotate(-90deg);
   }
 
   .minimap {
@@ -924,32 +1089,6 @@ a:hover {
 @media (max-width: 759px) {
   .container {
     padding-inline: var(--space-2);
-  }
-
-  .level {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .level-tag {
-    min-height: 0;
-    justify-items: start;
-    text-align: left;
-  }
-
-  .arrow {
-    height: 36px;
-    justify-items: start;
-    padding-left: 24px;
-  }
-
-  .arrow svg {
-    width: 32px;
-    height: 14px;
-    transform: rotate(90deg);
-  }
-
-  .level-body {
-    padding: 16px;
   }
 }
 

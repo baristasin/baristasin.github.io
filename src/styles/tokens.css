@@ -62,7 +62,7 @@
   --shadow-lift: 0 14px 34px rgba(41, 31, 20, 0.13);
   --shadow-glow: 0 8px 28px rgba(194, 95, 8, 0.38);
   --content-width: 1120px;
-  --wide-width: 1240px; /* the career map section */
+  --wide-width: 1680px; /* the career map section: map, levels and the Details panel */
   --prose-width: 65ch;
   --header-height: 68px;
   --tag-height: 136px; /* level name boxes in the career map */

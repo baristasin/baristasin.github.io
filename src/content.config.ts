@@ -5,7 +5,8 @@ import { z } from 'astro/zod';
 // Files whose name starts with an underscore (like _template.md) are skipped.
 const markdownFiles = '**/[^_]*.md';
 
-// One Markdown file per career level. The text under the frontmatter is the level's description.
+// One Markdown file per career level. `summary` shows on the level's card;
+// the media and the text under the frontmatter show in the Details panel.
 const career = defineCollection({
   loader: glob({ pattern: markdownFiles, base: './src/content/career' }),
   schema: ({ image }) =>
@@ -17,6 +18,7 @@ const career = defineCollection({
       years: z.string().optional(),
       chapter: z.number(),
       role: z.string(),
+      summary: z.string(),
       stats: z.array(z.string()).default([]),
       tags: z.array(z.string()).default([]),
       media: z

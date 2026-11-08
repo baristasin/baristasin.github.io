@@ -1,6 +1,5 @@
 ---
-import { render, type CollectionEntry } from 'astro:content';
-import MediaBlock from './MediaBlock.astro';
+import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   entry: CollectionEntry<'career'>;
@@ -8,11 +7,11 @@ interface Props {
 }
 
 const { entry, color } = Astro.props;
-const { Content } = await render(entry);
 const level = entry.data;
 const hasChips = level.stats.length > 0 || level.tags.length > 0;
 ---
 
+<!-- Clicking anywhere on the card opens this level in the Details panel (see LevelDetails.astro). -->
 <article class="level reveal" id={entry.id} style={`--c: ${color}`}>
   <div class="level-tag">
     <span class="lv">Level {level.level}</span>
@@ -30,13 +29,15 @@ const hasChips = level.stats.length > 0 || level.tags.length > 0;
 
   <div class="level-body">
     <p class="role mono">{level.role}</p>
-    <div class="desc"><Content /></div>
+    <p class="summary">{level.summary}</p>
     {hasChips && (
       <ul class="chips">
         {level.stats.map((stat) => <li class="chip stat">{stat}</li>)}
         {level.tags.map((tag) => <li class="chip">{tag}</li>)}
       </ul>
     )}
-    <MediaBlock media={level.media} />
+    <button class="details-button" type="button" aria-controls="details" aria-expanded="false">
+      Details <span class="details-arrow" aria-hidden="true">→</span>
+    </button>
   </div>
 </article>

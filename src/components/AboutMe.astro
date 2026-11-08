@@ -18,7 +18,7 @@ import { site, profileLinks } from '../site.config';
     </header>
 
     <figure class="about-figure">
-      <Image class="about-portrait" src={portrait} alt={site.name} widths={[340, 680]} sizes="340px" loading="eager" />
+      <Image class="about-portrait" src={portrait} alt={site.name} widths={[180, 360]} sizes="180px" loading="eager" />
     </figure>
 
     <div class="about-body">
@@ -40,8 +40,9 @@ import { site, profileLinks } from '../site.config';
   }
 
   .about-grid {
+    max-width: 980px;
     display: grid;
-    grid-template-columns: minmax(220px, 340px) minmax(0, 1fr);
+    grid-template-columns: 180px minmax(0, 1fr);
     grid-template-rows: auto 1fr;
     grid-template-areas:
       'figure head'
@@ -89,7 +90,7 @@ import { site, profileLinks } from '../site.config';
     grid-area: figure;
     position: relative;
     isolation: isolate;
-    margin: 16px 0 0 16px;
+    margin: 12px 0 0 12px;
   }
 
   .about-portrait {
@@ -104,9 +105,9 @@ import { site, profileLinks } from '../site.config';
   .about-figure::before {
     content: '';
     position: absolute;
-    inset: -16px auto auto -16px;
-    width: 110px;
-    height: 110px;
+    inset: -12px auto auto -12px;
+    width: 72px;
+    height: 72px;
     border-radius: var(--radius);
     background: var(--gradient-accent);
     opacity: 0.16;
@@ -116,9 +117,9 @@ import { site, profileLinks } from '../site.config';
   .about-figure::after {
     content: '';
     position: absolute;
-    inset: auto -16px -16px auto;
-    width: 150px;
-    height: 150px;
+    inset: auto -12px -12px auto;
+    width: 100px;
+    height: 100px;
     border: 2px solid var(--color-border);
     border-radius: var(--radius);
     z-index: -1;
@@ -145,18 +146,34 @@ import { site, profileLinks } from '../site.config';
     margin: var(--space-3) 0 0;
   }
 
+  /* Phones: the small portrait sits on the right and the text flows around it. */
   @media (max-width: 760px) {
     .about-grid {
-      grid-template-columns: minmax(0, 1fr);
-      grid-template-rows: auto;
-      grid-template-areas:
-        'head'
-        'figure'
-        'body';
+      display: block;
+    }
+
+    .about-head {
+      margin-bottom: var(--space-3);
     }
 
     .about-figure {
-      width: min(100% - 16px, 280px);
+      float: right;
+      width: 112px;
+      margin: 6px 6px 10px 22px;
+    }
+
+    .about-figure::before {
+      width: 48px;
+      height: 48px;
+    }
+
+    .about-figure::after {
+      width: 64px;
+      height: 64px;
+    }
+
+    .about-actions {
+      clear: both;
     }
   }
 </style>

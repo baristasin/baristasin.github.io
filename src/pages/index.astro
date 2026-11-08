@@ -5,6 +5,7 @@ import HomeHero from '../components/HomeHero.astro';
 import AboutMe from '../components/AboutMe.astro';
 import CareerMap from '../components/CareerMap.astro';
 import LevelCard from '../components/LevelCard.astro';
+import LevelDetails from '../components/LevelDetails.astro';
 import { chapters } from '../site.config';
 
 // Newest level first.
@@ -29,9 +30,7 @@ const levels = careerEntries.map((entry) => ({ entry, color: getDepthColor(entry
       <header class="work-head">
         <p class="section-eyebrow">Portfolio</p>
         <h2 id="work-title">Career map</h2>
-        <p class="lede">
-          {levels.length} levels in {chapters.length} chapters, newest first. Pick a level on the map or keep scrolling.
-        </p>
+        <p class="lede">{levels.length} levels in {chapters.length} chapters, newest first. Pick a level to see its details.</p>
       </header>
 
       <div class="world">
@@ -49,6 +48,10 @@ const levels = careerEntries.map((entry) => ({ entry, color: getDepthColor(entry
                 .map(({ entry, color }) => <LevelCard entry={entry} color={color} />)}
             </section>
           ))}
+        </div>
+
+        <div class="details-column">
+          <LevelDetails levels={levels} />
         </div>
       </div>
     </div>

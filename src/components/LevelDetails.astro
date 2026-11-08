@@ -1,0 +1,144 @@
+---
+// The Details panel: one block per level, and only the chosen level's block shows.
+// Wide screens: the panel is the column on the right and the newest level starts open.
+// Smaller screens: the panel opens right under the tapped card; tapping the card again closes it.
+// The script at the bottom also highlights the chosen card and its spot on the map.
+import { render, type CollectionEntry } from 'astro:content';
+import MediaBlock from './MediaBlock.astro';
+
+interface Props {
+  levels: { entry: CollectionEntry<'career'>; color: string }[];
+}
+
+const { levels } = Astro.props;
+const detailBlocks = await Promise.all(
+  levels.map(async ({ entry }) => ({ entry, Content: (await render(entry)).Content })),
+);
+---
+
+<aside class="details-panel" id="details" aria-label="Level details" style={`--c: ${levels[0].color}`}>
+  {detailBlocks.map(({ entry, Content }, index) => {
+    const level = entry.data;
+    const hasDetails = level.media.length > 0 || Boolean(entry.body?.trim());
+    return (
+      <article class="level-details" data-level-id={entry.id} hidden={index > 0}>
+        <header class="details-head">
+          <p class="section-eyebrow">Details · Level {level.level}</p>
+          <h3>{level.title}</h3>
+          <p class="details-meta">{[level.subtitle, level.years].filter(Boolean).join(' · ')}</p>
+          <p class="role mono">{level.role}</p>
+        </header>
+        <MediaBlock media={level.media} />
+        <div class="details-text"><Content /></div>
+        {!hasDetails && <p class="details-empty">Photos, videos and a longer write-up are coming soon.</p>}
+      </article>
+    );
+  })}
+  <button class="details-close" type="button">Close details <span aria-hidden="true">↑</span></button>
+</aside>
+
+<script>
+  const panel = document.querySelector<HTMLElement>('.details-panel')!;
+  const panelColumn = document.querySelector<HTMLElement>('.details-column')!;
+  const closeButton = panel.querySelector<HTMLButtonElement>('.details-close')!;
+  const detailBlocks = Array.from(panel.querySelectorAll<HTMLElement>('.level-details'));
+  const levels = Array.from(document.querySelectorAll<HTMLElement>('.level'));
+  const nodes = Array.from(document.querySelectorAll<HTMLAnchorElement>('.node'));
+  const strip = document.querySelector<HTMLElement>('.path')!;
+  const wideScreen = window.matchMedia('(min-width: 1200px)');
+  const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let selectedLevel: HTMLElement | null = null;
+
+  function showLevel(level: HTMLElement) {
+    selectedLevel = level;
+    highlight(level.id);
+    for (const block of detailBlocks) {
+      block.hidden = block.dataset.levelId !== level.id;
+    }
+    panel.style.setProperty('--c', level.style.getPropertyValue('--c'));
+    panel.hidden = false;
+    panel.scrollTop = 0;
+    placePanel();
+  }
+
+  function closeDetails() {
+    selectedLevel = null;
+    highlight('');
+    panel.hidden = true;
+  }
+
+  // Marks the chosen level's card and its spot on the map.
+  function highlight(id: string) {
+    for (const level of levels) {
+      const isSelected = level.id === id;
+      level.classList.toggle('is-selected', isSelected);
+      level.querySelector('.details-button')!.setAttribute('aria-expanded', String(isSelected));
+    }
+    for (const node of nodes) {
+      const isSelected = node.dataset.target === id;
+      node.classList.toggle('is-selected', isSelected);
+      if (isSelected) scrollStripTo(node);
+    }
+  }
+
+  // Wide screens keep the panel in its column; smaller screens put it right under the chosen card.
+  function placePanel() {
+    if (wideScreen.matches) {
+      panelColumn.append(panel);
+    } else if (selectedLevel) {
+      selectedLevel.after(panel);
+    }
+  }
+
+  // On smaller screens the map is a horizontal strip; keep the chosen level in view.
+  function scrollStripTo(node: HTMLElement) {
+    const left = node.offsetLeft - (strip.clientWidth - node.offsetWidth) / 2;
+    strip.scrollTo({ left: Math.max(0, left), behavior: isReducedMotion ? 'auto' : 'smooth' });
+  }
+
+  function scrollToLevel(level: HTMLElement) {
+    level.scrollIntoView({ block: 'start', behavior: isReducedMotion ? 'auto' : 'smooth' });
+  }
+
+  function scrollToPanel() {
+    panel.scrollIntoView({ block: 'start', behavior: isReducedMotion ? 'auto' : 'smooth' });
+  }
+
+  for (const level of levels) {
+    level.addEventListener('click', () => {
+      const isSmallScreen = !wideScreen.matches;
+      if (isSmallScreen && level === selectedLevel) {
+        closeDetails();
+        return;
+      }
+      showLevel(level);
+      if (isSmallScreen) scrollToPanel();
+    });
+  }
+
+  for (const node of nodes) {
+    node.addEventListener('click', (event) => {
+      event.preventDefault();
+      const level = document.getElementById(node.dataset.target!)!;
+      showLevel(level);
+      scrollToLevel(level);
+    });
+  }
+
+  closeButton.addEventListener('click', () => {
+    const level = selectedLevel!;
+    closeDetails();
+    scrollToLevel(level);
+  });
+
+  wideScreen.addEventListener('change', () => {
+    if (wideScreen.matches && !selectedLevel) showLevel(levels[0]);
+    placePanel();
+  });
+
+  if (wideScreen.matches) {
+    showLevel(levels[0]);
+  } else {
+    closeDetails();
+  }
+</script>
