@@ -597,7 +597,44 @@ a:hover {
   max-width: 64ch;
 }
 
-.details-button,
+/* "See details" is a clear button. It fills in when the card is hovered or chosen,
+   since a click anywhere on the card opens the details. */
+.details-button {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  border: 1.5px solid var(--color-accent);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-accent);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color var(--transition),
+    color var(--transition);
+}
+
+.level.is-selected .details-button {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+@media (hover: hover) {
+  .level:hover .details-button {
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+
+  /* A preview of the chosen look: the level's color shows behind its name box */
+  .level:not(.is-selected):hover .level-tag {
+    box-shadow: 3px 3px 0 var(--c);
+  }
+}
+
 .details-close {
   justify-self: start;
   display: inline-flex;
@@ -613,7 +650,6 @@ a:hover {
   cursor: pointer;
 }
 
-.details-button:hover,
 .details-close:hover {
   color: var(--color-accent-hover);
 }
