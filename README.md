@@ -17,7 +17,6 @@ While `npm run dev` runs, every saved change shows up in the browser right away.
 | Name, tagline, header tabs, chapters, links, Impressum details | `src/site.config.ts` |
 | Photo at the top of the home page | `src/assets/home/hero.jpg` (its quote, caption and crop: `hero` in `src/site.config.ts`) |
 | Portrait in the About section | `src/assets/home/portrait.jpg` |
-| Photo band between About and the career map | `src/assets/home/band.jpg` (its caption and crop: `band` in `src/site.config.ts`) |
 | About text | `src/content/about.md` |
 | Career levels (one file each) | `src/content/career/` |
 | Career images | `src/content/career/images/` |

@@ -23,13 +23,6 @@ export const hero = {
   quoteAuthor: '',
 };
 
-// The photo band between About and the career map.
-// To use your own photo, replace src/assets/home/band.jpg and keep the file name.
-export const band = {
-  photoPosition: '50% 70%',
-  photoCaption: '',
-};
-
 // Links shown in the About section and the footer (GitHub, LinkedIn, itch.io…).
 // Example: { label: 'itch.io', url: 'https://your-name.itch.io' }
 export const profileLinks: { label: string; url: string }[] = [];

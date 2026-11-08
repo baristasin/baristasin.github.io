@@ -76,7 +76,7 @@
   --header-height: 68px;
   --tag-height: 136px; /* level name boxes in the career map */
 
-  /* The mountain-ridge edge cut into the bottom of a photo (the shape comes from the Astro Chalet hero).
+  /* The mountain-ridge edge cut into the bottom of the top photo (the shape comes from the Astro Chalet hero).
      Each point is a spot across the width and how far up the ridge reaches, as a share of --ridge-height.
      The photo itself is cut, so whatever is behind it shows through and always matches the section below. */
   --ridge-height: clamp(32px, 5vw, 70px);
