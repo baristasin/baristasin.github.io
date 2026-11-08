@@ -76,6 +76,24 @@
   --header-height: 68px;
   --tag-height: 136px; /* level name boxes in the career map */
 
+  /* The mountain-ridge edge cut into the bottom of a photo (the shape comes from the Astro Chalet hero).
+     Each point is a spot across the width and how far up the ridge reaches, as a share of --ridge-height.
+     The photo itself is cut, so whatever is behind it shows through and always matches the section below. */
+  --ridge-height: clamp(32px, 5vw, 70px);
+  --ridge-bottom: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 0.51 * var(--ridge-height)),
+    86.1% calc(100% - 0.86 * var(--ridge-height)),
+    73.6% calc(100% - 0.46 * var(--ridge-height)),
+    59% calc(100% - 0.77 * var(--ridge-height)),
+    47.9% calc(100% - 0.57 * var(--ridge-height)),
+    36.1% calc(100% - 0.94 * var(--ridge-height)),
+    22.9% calc(100% - 0.51 * var(--ridge-height)),
+    12.5% calc(100% - 0.83 * var(--ridge-height)),
+    0 calc(100% - 0.46 * var(--ridge-height))
+  );
+
   --transition: 220ms ease;
 }
 

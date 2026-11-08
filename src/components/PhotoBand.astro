@@ -1,12 +1,10 @@
 ---
 // A short photo band between the About section and the career map.
-// Its ridge edges come from the Astro Chalet theme's hero (MIT, see LICENSES/astro-chalet.txt).
+// Its bottom edge is the same mountain ridge as the top photo (--ridge-bottom in tokens.css).
 // To use your own photo, replace src/assets/home/band.jpg and keep the file name.
 import { Image } from 'astro:assets';
 import bandPhoto from '../assets/home/band.jpg';
 import { band } from '../site.config';
-
-const ridgePath = 'M0 70V38L180 12l150 22 190-30 170 26 160-14 210 22 180-28 200 24V70z';
 ---
 
 <div class="photo-band">
@@ -19,12 +17,6 @@ const ridgePath = 'M0 70V38L180 12l150 22 190-30 170 26 160-14 210 22 180-28 200
     style={`object-position: ${band.photoPosition}`}
   />
   {band.photoCaption && <p class="band-caption">{band.photoCaption}</p>}
-  <svg class="band-edge band-edge-top" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
-    <path d={ridgePath}></path>
-  </svg>
-  <svg class="band-edge band-edge-bottom" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
-    <path d={ridgePath}></path>
-  </svg>
 </div>
 
 <style>
@@ -32,6 +24,7 @@ const ridgePath = 'M0 70V38L180 12l150 22 190-30 170 26 160-14 210 22 180-28 200
     position: relative;
     height: clamp(180px, 22vw, 300px);
     overflow: hidden;
+    /* Shows through the ridge cut at the bottom of the photo, so it matches the dark career map */
     background: var(--night-bg);
   }
 
@@ -41,12 +34,13 @@ const ridgePath = 'M0 70V38L180 12l150 22 190-30 170 26 160-14 210 22 180-28 200
     width: 100%;
     height: 100%;
     object-fit: cover;
+    clip-path: var(--ridge-bottom);
   }
 
   .band-caption {
     position: absolute;
     right: var(--space-3);
-    bottom: calc(clamp(24px, 4vw, 56px) + var(--space-1));
+    bottom: calc(var(--ridge-height) + var(--space-1));
     margin: 0;
     font-family: var(--font-mono);
     font-size: 0.72rem;
@@ -54,33 +48,5 @@ const ridgePath = 'M0 70V38L180 12l150 22 190-30 170 26 160-14 210 22 180-28 200
     color: var(--color-dark-text);
     opacity: 0.85;
     text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
-  }
-
-  .band-edge {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: clamp(24px, 4vw, 56px);
-    display: block;
-  }
-
-  /* The About section's white hangs down over the top of the photo */
-  .band-edge-top {
-    top: -1px;
-    transform: scale(-1, -1);
-  }
-
-  .band-edge-top path {
-    fill: var(--color-surface);
-  }
-
-  /* The dark career map rises into the bottom of the photo */
-  .band-edge-bottom {
-    bottom: -1px;
-    transform: scaleX(-1);
-  }
-
-  .band-edge-bottom path {
-    fill: var(--night-bg);
   }
 </style>

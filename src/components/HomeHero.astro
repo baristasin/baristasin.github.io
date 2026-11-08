@@ -26,9 +26,6 @@ import { hero } from '../site.config';
     )}
     {hero.photoCaption && <p class="hero-caption">{hero.photoCaption}</p>}
   </div>
-  <svg class="hero-ridge" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0 70V38L180 12l150 22 190-30 170 26 160-14 210 22 180-28 200 24V70z"></path>
-  </svg>
 </div>
 
 <style>
@@ -42,7 +39,8 @@ import { hero } from '../site.config';
     /* Short on purpose: the About section must show on the first screen. */
     min-height: clamp(300px, 54vh, 600px);
     min-height: clamp(300px, 54svh, 600px);
-    background: var(--color-dark-bg);
+    /* Shows through the ridge cut at the bottom of the photo, so it matches the About section */
+    background: var(--color-surface);
     color: var(--color-dark-text);
   }
 
@@ -53,6 +51,12 @@ import { hero } from '../site.config';
     height: 100%;
     object-fit: cover;
     z-index: -2;
+  }
+
+  /* The mountain-ridge edge into the About section (shape: --ridge-bottom in tokens.css) */
+  .hero-photo,
+  .hero:has(.hero-quote)::before {
+    clip-path: var(--ridge-bottom);
   }
 
   /* With a quote, the lower left darkens so the text stays readable. */
@@ -70,7 +74,7 @@ import { hero } from '../site.config';
     align-items: flex-end;
     justify-content: space-between;
     gap: var(--space-2) var(--space-4);
-    padding-block: var(--space-4) var(--space-2);
+    padding-block: var(--space-4) calc(var(--ridge-height) + var(--space-2));
   }
 
   .hero-quote {
@@ -109,18 +113,6 @@ import { hero } from '../site.config';
     color: var(--color-dark-text);
     opacity: 0.85;
     text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
-  }
-
-  /* Mountain-ridge edge into the About section */
-  .hero-ridge {
-    display: block;
-    width: 100%;
-    height: clamp(32px, 5vw, 70px);
-    margin-top: -1px;
-  }
-
-  .hero-ridge path {
-    fill: var(--color-surface);
   }
 
   /* Phones: a lower band, so the name and the first lines of About fit on the first screen. */
