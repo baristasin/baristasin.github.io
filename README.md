@@ -17,13 +17,14 @@ While `npm run dev` runs, every saved change shows up in the browser right away.
 | Name, tagline, header tabs, chapters, links, Impressum details | `src/site.config.ts` |
 | Photo at the top of the home page | `src/assets/home/hero.jpg` (its quote, caption and crop: `hero` in `src/site.config.ts`) |
 | Portrait in the About section | `src/assets/home/portrait.jpg` |
+| Photo band between About and the career map | `src/assets/home/band.jpg` (its caption and crop: `band` in `src/site.config.ts`) |
 | About text | `src/content/about.md` |
 | Career levels (one file each) | `src/content/career/` |
 | Career images | `src/content/career/images/` |
 | Short mp4 clips | `public/videos/` |
 | Reading journal entries | `src/content/reading/` |
 | History & Money entries | `src/content/history/` |
-| Colors, fonts, sizes | `src/styles/tokens.css` |
+| Colors (including the dark career map), fonts, sizes | `src/styles/tokens.css` |
 | Shared layout and career map styles | `src/styles/global.css` |
 | Header, photo band, About section, footer | their files in `src/components/` |
 

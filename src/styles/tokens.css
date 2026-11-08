@@ -1,28 +1,37 @@
 /* Design tokens: every color, font and size the site uses.
    Change a value here and it changes everywhere.
-   The palette and most sizes come from the Astro Chalet theme by Antoine Grange
-   (MIT, see LICENSES/astro-chalet.txt). */
+   Palette "Ink & Paper": paper white, ink black, and color only from the photos and the career map.
+   Most sizes come from the Astro Chalet theme by Antoine Grange (MIT, see LICENSES/astro-chalet.txt). */
 
 :root {
   /* Light sections */
-  --color-bg: #faf6ee; /* page background */
+  --color-bg: #f3f2ee; /* page background (paper) */
   --color-surface: #ffffff; /* cards, panels, the About section */
-  --color-surface-alt: #f1e7d3;
-  --color-text: #291f14;
-  --color-text-muted: #6a5a45;
-  --color-accent: #92400e; /* buttons, links, small labels */
-  --color-accent-hover: #78350f;
-  --color-on-accent: #ffffff; /* text on the accent color */
-  --color-border: #e7dbc4;
-  --color-line: #bfae92; /* arrows and dividers in the career map */
+  --color-surface-alt: #e7e5df;
+  --color-text: #1a1a1a; /* ink */
+  --color-text-muted: #5c5b57;
+  --color-accent: #1a1a1a; /* buttons, links, small labels */
+  --color-accent-hover: #000000;
+  --color-on-accent: #f3f2ee; /* text on the accent color */
+  --color-border: #dcdad3;
+  --color-line: #b5b2aa; /* arrows and dividers in the career map */
 
-  /* Dark sections: header, photo band, footer */
-  --color-dark-bg: #1d140d;
-  --color-dark-text: #f7f0e4;
-  --color-dark-text-muted: #cfbb9f;
-  --color-accent-bright: #e79051; /* accent that reads well on dark */
+  /* Header, photo band edges, footer */
+  --color-dark-bg: #171717;
+  --color-dark-text: #f3f2ee;
+  --color-dark-text-muted: #b9b7b0;
+  --color-accent-bright: #f3f2ee; /* accent on dark: the Work button */
 
-  --gradient-accent: linear-gradient(135deg, #c05f08 0%, #92400e 100%);
+  /* The dark career map section (see .section-dark in global.css) */
+  --night-bg: #141517;
+  --night-surface: #1d1f22;
+  --night-surface-alt: #26282c;
+  --night-text: #eceae4;
+  --night-text-muted: #a3a19a;
+  --night-border: #2d3034;
+  --night-line: #4b4e54;
+
+  --gradient-accent: linear-gradient(135deg, #2c2c2c 0%, #111111 100%);
 
   /* Career map depth scale: d0 = earliest (far, cool) … d8 = now (near, warm) */
   --d0: #3f3ba3;
@@ -58,9 +67,9 @@
   --radius: 16px;
   --radius-sm: 10px;
   --radius-pill: 999px;
-  --shadow: 0 2px 14px rgba(41, 31, 20, 0.07);
-  --shadow-lift: 0 14px 34px rgba(41, 31, 20, 0.13);
-  --shadow-glow: 0 8px 28px rgba(194, 95, 8, 0.38);
+  --shadow: 0 2px 14px rgba(0, 0, 0, 0.06);
+  --shadow-lift: 0 14px 34px rgba(0, 0, 0, 0.12);
+  --shadow-glow: 0 8px 24px rgba(0, 0, 0, 0.18); /* primary buttons */
   --content-width: 1120px;
   --wide-width: 1680px; /* the career map section: map, levels and the Details panel */
   --prose-width: 65ch;

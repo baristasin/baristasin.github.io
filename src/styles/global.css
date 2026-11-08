@@ -125,6 +125,31 @@ a:hover {
   background: var(--color-surface);
 }
 
+/* A dark section uses the same color names with the night values from tokens.css,
+   so everything inside it (cards, text, labels, buttons) turns dark by itself. */
+.section-dark {
+  --color-bg: var(--night-bg);
+  --color-surface: var(--night-surface);
+  --color-surface-alt: var(--night-surface-alt);
+  --color-text: var(--night-text);
+  --color-text-muted: var(--night-text-muted);
+  --color-accent: var(--night-text);
+  --color-accent-hover: #ffffff;
+  --color-on-accent: var(--night-bg);
+  --color-border: var(--night-border);
+  --color-line: var(--night-line);
+  --gradient-accent: linear-gradient(135deg, #f3f2ee 0%, #d9d7d0 100%);
+  --shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
+  --shadow-lift: 0 14px 34px rgba(0, 0, 0, 0.45);
+  --shadow-glow: none;
+  /* The two farthest depth colors, brightened so they still show on the dark ground */
+  --d0: #6460d6;
+  --d1: #4c7fda;
+  background: var(--color-bg);
+  color: var(--color-text);
+  color-scheme: dark;
+}
+
 /* Pages without a photo band: writing, legal, 404 */
 .page-content {
   display: grid;
@@ -200,7 +225,7 @@ a:hover {
 
 .button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 34px rgba(194, 95, 8, 0.48);
+  box-shadow: var(--shadow-lift);
   color: var(--color-on-accent);
 }
 

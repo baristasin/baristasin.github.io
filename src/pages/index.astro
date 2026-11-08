@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HomeHero from '../components/HomeHero.astro';
 import AboutMe from '../components/AboutMe.astro';
+import PhotoBand from '../components/PhotoBand.astro';
 import CareerMap from '../components/CareerMap.astro';
 import LevelCard from '../components/LevelCard.astro';
 import LevelDetails from '../components/LevelDetails.astro';
@@ -24,8 +25,9 @@ const levels = careerEntries.map((entry) => ({ entry, color: getDepthColor(entry
 <BaseLayout>
   <HomeHero />
   <AboutMe />
+  <PhotoBand />
 
-  <section class="section" id="work" aria-labelledby="work-title">
+  <section class="section section-dark" id="work" aria-labelledby="work-title">
     <div class="container is-wide">
       <header class="work-head">
         <p class="section-eyebrow">Portfolio</p>
