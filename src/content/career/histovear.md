@@ -12,6 +12,19 @@ tags:
   - Single depth camera
   - Markerless
   - Ongoing
+media:
+  - type: video
+    src: /videos/histovear-live-test.mp4
+    poster: /videos/histovear-live-test.webp
+    title: "Live test: the avatar in Unity follows the pose from the camera"
+  - type: image
+    src: ./images/histovear-chair.jpg
+    alt: "Left: the camera image with the detected pose drawn over a person sitting on a chair with crossed legs. Right: Unity, where the raw pose points and a blue avatar take the same pose"
+    caption: Sitting on a chair with crossed legs
+  - type: image
+    src: ./images/histovear-floor.jpg
+    alt: "Left: the camera image with the detected pose drawn over a person sitting cross-legged on the floor. Right: Unity, where the raw pose points and a blue avatar take the same pose"
+    caption: Sitting cross-legged on the floor
 ---
 
 Markerless motion capture is on the rise, and many companies work on it. Well-known examples include Rokoko, Move.ai, DeepMotion and RADiCAL.
