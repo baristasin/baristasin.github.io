@@ -687,12 +687,19 @@ a:hover {
 /* Media inside a level */
 .media-grid {
   display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
 
 .media-item {
+  grid-column: 1 / -1; /* full width */
   margin: 0;
   min-width: 0;
+}
+
+/* Portrait photos take one column, so two of them sit side by side. */
+.media-item.is-portrait {
+  grid-column: auto;
 }
 
 .media-item img,

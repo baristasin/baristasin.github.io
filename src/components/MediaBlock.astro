@@ -13,9 +13,16 @@ const { media } = Astro.props;
   <div class="media-grid">
     {media.map((item) => {
       if (item.type === 'image') {
+        // Portrait photos take half the width, so two of them sit side by side.
+        const isPortrait = item.src.height > item.src.width;
         return (
-          <figure class="media-item">
-            <Image src={item.src} alt={item.alt} widths={[480, 960, 1440]} sizes="(max-width: 760px) 100vw, 760px" />
+          <figure class:list={['media-item', { 'is-portrait': isPortrait }]}>
+            <Image
+              src={item.src}
+              alt={item.alt}
+              widths={isPortrait ? [360, 720] : [480, 960, 1440]}
+              sizes={isPortrait ? '(max-width: 760px) 50vw, 380px' : '(max-width: 760px) 100vw, 760px'}
+            />
             {item.caption && <figcaption>{item.caption}</figcaption>}
           </figure>
         );
