@@ -95,20 +95,20 @@ import { site, profileLinks } from '../site.config';
 
   .about-portrait {
     width: 100%;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 1;
     object-fit: cover;
-    border-radius: var(--radius);
+    border-radius: 50%;
     box-shadow: var(--shadow-lift);
   }
 
-  /* Decorative offset shapes behind the portrait */
+  /* Decorative offset circles behind the portrait */
   .about-figure::before {
     content: '';
     position: absolute;
     inset: -12px auto auto -12px;
     width: 72px;
     height: 72px;
-    border-radius: var(--radius);
+    border-radius: 50%;
     background: var(--gradient-accent);
     opacity: 0.16;
     z-index: -1;
@@ -121,7 +121,7 @@ import { site, profileLinks } from '../site.config';
     width: 100px;
     height: 100px;
     border: 2px solid var(--color-border);
-    border-radius: var(--radius);
+    border-radius: 50%;
     z-index: -1;
   }
 
