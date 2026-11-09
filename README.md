@@ -20,7 +20,7 @@ While `npm run dev` runs, every saved change shows up in the browser right away.
 | About text | `src/content/about.md` |
 | Career levels (one file each) | `src/content/career/` |
 | Career images | `src/content/career/images/` |
-| Short mp4 clips | `public/videos/` |
+| Short mp4 clips and their poster pictures | `public/videos/` |
 | Reading journal entries | `src/content/reading/` |
 | History & Money entries | `src/content/history/` |
 | Colors (including the dark career map), fonts, sizes | `src/styles/tokens.css` |
@@ -33,7 +33,9 @@ In a career level, `summary` shows on the level's card. The Details panel, which
 
 To change a photo, replace the file and keep its name. Astro makes the smaller versions for phones by itself. Photos around 3000 px on the long side are enough. This repository is public, so remove location data (EXIF/GPS) from a photo before you commit it.
 
-Playable builds (Unity WebGL, Godot web exports) are best uploaded to itch.io and embedded with the `itch` media type. A video or game embed loads only after the visitor clicks, so nothing reaches YouTube or itch.io before that.
+Playable builds (Unity WebGL, Godot web exports) are best uploaded to itch.io and embedded with the `itch` media type. Videos and game embeds load only after the visitor clicks play, so nothing reaches YouTube or itch.io before that. Until then a video shows its poster picture, which loads only when its level's Details open.
+
+Clips are kept small before they are committed: about 960 px wide, 30 frames per second, H.264 in an mp4 file, and no sound track when the recording is silent. Each clip gets a `.webp` poster with the same name, made from its first frame. Longer videos, such as talks, are better on YouTube, embedded with the `youtube` media type.
 
 ## Publish on GitHub Pages
 

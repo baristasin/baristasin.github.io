@@ -63,6 +63,10 @@ const detailBlocks = await Promise.all(
     for (const block of detailBlocks) {
       block.hidden = block.dataset.levelId !== level.id;
     }
+    // Video posters load only for the level whose Details are open.
+    for (const video of panel.querySelectorAll<HTMLVideoElement>(`[data-level-id="${level.id}"] video[data-poster]`)) {
+      video.poster = video.dataset.poster!;
+    }
     panel.style.setProperty('--c', level.style.getPropertyValue('--c'));
     panel.hidden = false;
     panel.scrollTop = 0;

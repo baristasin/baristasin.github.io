@@ -26,7 +26,7 @@ const career = defineCollection({
         .array(
           z.discriminatedUnion('type', [
             z.object({ type: z.literal('image'), src: image(), alt: z.string(), caption: z.string().optional() }),
-            z.object({ type: z.literal('video'), src: z.string(), title: z.string() }),
+            z.object({ type: z.literal('video'), src: z.string(), poster: z.string().optional(), title: z.string() }),
             z.object({ type: z.literal('youtube'), id: z.string(), title: z.string() }),
             z.object({ type: z.literal('itch'), embedUrl: z.string(), title: z.string(), height: z.number().default(480) }),
             z.object({ type: z.literal('link'), url: z.string(), label: z.string() }),

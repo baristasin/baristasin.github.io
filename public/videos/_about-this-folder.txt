@@ -1,1 +1,2 @@
-Short mp4 clips for the career page go here (keep them small, a few MB each).
+Short mp4 clips for the career page go here (keep them small, about 1 MB for 10 seconds).
+Each clip has a .webp poster picture with the same name, shown until the visitor presses play.

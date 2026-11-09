@@ -21,9 +21,11 @@ const { media } = Astro.props;
         );
       }
       if (item.type === 'video') {
+        // preload="none": the video downloads only when the visitor presses play.
+        // The poster is set by LevelDetails.astro when this level's Details open.
         return (
           <figure class="media-item">
-            <video src={item.src} controls preload="metadata" playsinline></video>
+            <video src={item.src} data-poster={item.poster} controls preload="none" playsinline></video>
             <figcaption>{item.title}</figcaption>
           </figure>
         );

@@ -24,6 +24,7 @@ media:                         # optional: shown in the Details panel, in this o
     caption: Optional caption
   - type: video                # short mp4 files go in public/videos/
     src: /videos/project-loop.mp4
+    poster: /videos/project-loop.webp   # optional: the picture shown until the visitor presses play
     title: Gameplay loop
   - type: youtube              # the part after "v=" in a YouTube link
     id: VIDEO_ID
