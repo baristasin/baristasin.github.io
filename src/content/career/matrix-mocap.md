@@ -11,6 +11,11 @@ credits:
 tags:
   - Motion capture
   - Dance battle
+media:
+  - type: video
+    src: /videos/matrix-mocap-premiere.mp4
+    poster: /videos/matrix-mocap-premiere.webp
+    title: Premiere video
 ---
 
 We made our Matrix dance battle with motion capture suits and two dancer friends. The piece uses custom shaders, scenes and scene transitions, and audio features.

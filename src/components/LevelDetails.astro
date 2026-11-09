@@ -63,6 +63,10 @@ const detailBlocks = await Promise.all(
     for (const block of detailBlocks) {
       block.hidden = block.dataset.levelId !== level.id;
     }
+    // A hidden video would keep playing with its sound on, so pause it.
+    for (const video of panel.querySelectorAll<HTMLVideoElement>('.level-details[hidden] video')) {
+      video.pause();
+    }
     // Video posters load only for the level whose Details are open.
     for (const video of panel.querySelectorAll<HTMLVideoElement>(`[data-level-id="${level.id}"] video[data-poster]`)) {
       video.poster = video.dataset.poster!;
@@ -76,6 +80,9 @@ const detailBlocks = await Promise.all(
   function closeDetails() {
     selectedLevel = null;
     highlight('');
+    for (const video of panel.querySelectorAll('video')) {
+      video.pause();
+    }
     panel.hidden = true;
   }
 
