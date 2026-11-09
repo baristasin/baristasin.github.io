@@ -13,7 +13,7 @@ tags:
 media:
   - type: video
     src: /videos/freelance-cyberbullying.mp4
-    poster: /videos/freelance-cyberbullying.webp
+    poster: /videos/freelance-cyberbullying-city.webp
     title: Cyberbullying prevention game
     portrait: true
   - type: video

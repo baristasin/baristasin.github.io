@@ -35,7 +35,7 @@ To change a photo, replace the file and keep its name. Astro makes the smaller v
 
 Playable builds (Unity WebGL, Godot web exports) are best uploaded to itch.io and embedded with the `itch` media type. Videos and game embeds load only after the visitor clicks play, so nothing reaches YouTube or itch.io before that. Until then a video shows its poster picture, which loads only when its level's Details open.
 
-Clips are kept small before they are committed: about 960 px wide, 30 frames per second, H.264 in an mp4 file, and no sound track when the recording is silent. Each clip gets a `.webp` poster with the same name, made from its first frame. Longer videos, such as talks, are better on YouTube, embedded with the `youtube` media type.
+Clips are kept small before they are committed: about 960 px wide, 30 frames per second, H.264 in an mp4 file, and no sound track when the recording is silent. Each clip gets a `.webp` poster picture, a frame chosen from the clip. When a poster is replaced, the new one gets a new file name: GitHub Pages can keep serving an old file under the same name for about 10 minutes. Longer videos, such as talks, are better on YouTube, embedded with the `youtube` media type.
 
 ## Publish on GitHub Pages
 
