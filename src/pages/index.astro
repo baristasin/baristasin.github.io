@@ -12,10 +12,14 @@ import { chapters } from '../site.config';
 const careerEntries = (await getCollection('career')).sort((a, b) => b.data.level - a.data.level);
 
 // Older levels get cool colors, recent ones warm colors (--d0 … --d8 in tokens.css).
+// A level that falls between two colors of the scale gets a blend of the two, so no two levels share a color.
 const highestLevel = Math.max(...careerEntries.map((entry) => entry.data.level));
 function getDepthColor(level: number) {
-  const depthIndex = Math.round(((level - 1) / Math.max(1, highestLevel - 1)) * 8);
-  return `var(--d${depthIndex})`;
+  const scalePosition = ((level - 1) / Math.max(1, highestLevel - 1)) * 8;
+  const lowerColorIndex = Math.floor(scalePosition);
+  const upperColorIndex = Math.ceil(scalePosition);
+  const upperColorPercent = Math.round((scalePosition - lowerColorIndex) * 100);
+  return `color-mix(in oklch, var(--d${lowerColorIndex}), var(--d${upperColorIndex}) ${upperColorPercent}%)`;
 }
 
 const levels = careerEntries.map((entry) => ({ entry, color: getDepthColor(entry.data.level) }));

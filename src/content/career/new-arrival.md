@@ -1,5 +1,5 @@
 ---
-level: 6
+level: 7
 title: New Arrival
 subtitle: Serious game
 years: "2026"

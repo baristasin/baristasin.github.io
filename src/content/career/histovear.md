@@ -1,5 +1,5 @@
 ---
-level: 9
+level: 10
 title: HistoVeaR
 subtitle: Markerless motion capture
 years: "2026–"

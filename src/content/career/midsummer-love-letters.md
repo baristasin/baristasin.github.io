@@ -1,5 +1,5 @@
 ---
-level: 7
+level: 8
 title: Midsummer Love Letters
 subtitle: Adaptation
 years: "2026"

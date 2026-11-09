@@ -2,7 +2,7 @@
 # Copy this file to add a level. The new file's name becomes the level's link
 # (for example `my-project.md` → /#my-project). Files starting with _ are ignored.
 
-level: 10                      # order on the map; the highest number is the newest
+level: 11                      # order on the map; the highest number is the newest
 title: Project name
 mapName: Short name            # optional: shorter name for the map
 subtitle: One line under the title
