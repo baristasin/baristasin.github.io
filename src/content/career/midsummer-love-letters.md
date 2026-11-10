@@ -27,9 +27,9 @@ media:
     alt: "A player at the booth facing the monitor, which shows the screen for scanning and sending a handwritten letter; a laptop beside it shows Cologne Love Lab's leaderboard"
     caption: A player at the booth, with the leaderboard on the laptop
   - type: video
-    src: /videos/midsummer-gameplay.mp4
-    poster: /videos/midsummer-gameplay.webp
-    title: "Gameplay: making Lysander fall in love with Demetrius"
+    src: /videos/midsummer-poetry-game.mp4
+    poster: /videos/midsummer-poetry-game.webp
+    title: The short Shakespeare poetry game that comes before the real poems are written
   - type: image
     src: ./images/midsummer-screen.jpg
     alt: "The monitor inside the ivy arch, asking 'May we have the pleasure of knowing you?' above a portrait and a nickname field"
